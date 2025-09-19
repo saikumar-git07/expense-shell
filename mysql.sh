@@ -6,7 +6,8 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-
+echo "please enter DB password:"
+read -s mysql_root_password
 VALIDATE(){
     if [ $1 -ne 0 ]
     then 
@@ -38,7 +39,7 @@ VALIDATE $? "Starting MySQL Server"
 # VALIDATE $? "Setting up root password"
 #below code is userful for idempotent nature
 
-mysql -h db.devopswithaws.store -uroot -pExpenseApp@1 -e 'SHOW DATABASES;' &>>$LOGFILE
+mysql -h db.devopswithaws.store -uroot -p${mysql_root_password} -e 'SHOW DATABASES;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
      mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
