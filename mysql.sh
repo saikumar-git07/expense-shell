@@ -34,5 +34,15 @@ VALIDATE $? "Enabling MySQL Server"
 systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "Starting MySQL Server"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
-VALIDATE $? "MySQL Root password Setup"
+# mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+# VALIDATE $? "Setting up root password"
+#below code is userful for idempotent nature
+
+mysql -h devopswithaws.store -uroot -pExpenseApp@1 -e 'SHOW DATABASES;' &>>$LOGFILE
+if [ $? -ne 0 ]
+then
+     mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+     VALIDATE $? "MySQL Root password Setup"
+else
+    echo -e "MYSQL root password setup completed...$Y SKIPPING $N"
+fi
