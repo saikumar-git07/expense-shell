@@ -42,7 +42,7 @@ VALIDATE $? "Starting MySQL Server"
 mysql -h db.devopswithaws.store -uroot -p${mysql_root_password} -e 'SHOW DATABASES;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
-     mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+     mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOGFILE
      VALIDATE $? "MySQL Root password Setup"
 else
     echo -e "MYSQL root password setup completed...$Y SKIPPING $N"
