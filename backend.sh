@@ -44,3 +44,17 @@ then
 else
     echo -e "expense usering already created...$Y SKIPPING $N"
 fi
+
+mkdir -p /app
+VALIDATE $? "creating app directory"
+
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOGFILE
+VALIDATE $? "downloading backend code"
+
+cd /app
+unzip /tmp/backend.zip &>>$LOGFILE
+VALIDATE $? "Extracted backend code"
+
+npm install 
+VALIDATE $? "installing nodejs dependencies" 
+

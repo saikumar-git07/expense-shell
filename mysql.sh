@@ -39,8 +39,8 @@ VALIDATE $? "Starting MySQL Server"
 
 # mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
 # VALIDATE $? "Setting up root password"
-#below code is userful for idempotent nature
 
+#below code is userful for idempotent nature
 mysql -h db.devopswithaws.store -uroot -p${mysql_root_password} -e 'SHOW DATABASES;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
